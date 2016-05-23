@@ -43,9 +43,10 @@ var education = {
 		'location': 'Atlanta, Georgia',
 		'degree': 'Bachelors',
 		'majors': ['Mechanical Engineering'],
-		'dates': '2005-2009'
+		'dates': '2005-2009',
+		'url': 'www.gatech.edu'
 	}],
-	'online_courses': [{
+	'onlineCourses': [{
 		'title': 'Front End Web-Development Nanodegree',
 		'school': 'Udacity',
 		'date': '2015-2016',
@@ -63,7 +64,15 @@ var projects = {
 	}]
 };
 
-function displayContacts() {
+
+bio.display = function() {
+if (bio.skills.length) {
+	$('#header').append(HTMLskillsStart);
+	for (var i=0; i < bio.skills.length; i++) {
+		var formattedSkill = HTMLskills.replace('%data%', bio.skills[i]);
+		$('#skills').append(formattedSkill);
+	}
+	}
 	var formattedName = HTMLheaderName.replace('%data%', bio.name);
 	var formattedRole = HTMLheaderRole.replace('%data%', bio.role);
 	var formattedMobile = HTMLmobile.replace('%data%', bio.contacts.mobile);
@@ -82,17 +91,6 @@ function displayContacts() {
 	$('#header').append(formattedBioPic1);
 	$('#header').append(formattedBioPic2);
 	$('#topContacts, #footerContacts').prepend(formattedLocation, formattedGithub, formattedTwitter, formattedEmail, formattedMobile);
-}
-
-bio.display = function() {
-if (bio.skills.length) {
-	$('#header').append(HTMLskillsStart);
-	for (var i=0; i < bio.skills.length; i++) {
-		var formattedSkill = HTMLskills.replace('%data%', bio.skills[i]);
-		$('#skills').append(formattedSkill);
-	}
-	}
-	displayContacts();
 };
 bio.display();
 
@@ -135,11 +133,13 @@ projects.display = function() {
 		var formattedProjectTitle = HTMLprojectTitle.replace('%data%', project.title);
 		var formattedProjectDates = HTMLprojectDates.replace('%data%', project.dates);
 		var formattedProjectDescription = HTMLprojectDescription.replace('%data%', project.description);
-		var formattedProjectImage = HTMLprojectImage.replace('%data%', project.images);
+		for (var i=0; i<project.images.length; i++) {
+			var formattedProjectImage = HTMLprojectImage.replace('%data%', project.images[i]);
+		}
+		console.log(formattedProjectImage);
 		$('.project-entry:last').append(formattedProjectTitle, formattedProjectDates, formattedProjectDescription, formattedProjectImage);
 	});
 };
-
 projects.display();
 
 education.display = function() {
@@ -153,8 +153,8 @@ education.display = function() {
 		var hr = document.createElement('hr');
 		$('.education-entry:last').append(formattedschoolName, formattedschoolDates, formattedschoolDegree, formattedschoolLocation, formattedschoolMajor, hr);
 	});
-	education.online_courses.forEach(function(course) {
-		$('#education').append(HTMLonlineClasses);
+	$('#education').append(HTMLonlineClasses);
+	education.onlineCourses.forEach(function(course) {
 		$('#education').append(HTMLschoolStart);
 		var formattedonlineTitle = HTMLonlineTitle.replace('%data%', course.title);
 		var formattedonlineSchool = HTMLonlineSchool.replace('%data%', course.school);
