@@ -168,7 +168,7 @@ education.display();
 
 $('#mapDiv').append(googleMap);
 
-// test
+
 
 
 
